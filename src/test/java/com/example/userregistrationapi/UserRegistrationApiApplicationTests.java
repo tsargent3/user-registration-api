@@ -17,8 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AutoConfigureMockMvc
 class UserRegistrationApiApplicationTests {
 
-    @Autowired
-    private MockMvc mockMvc;
+	@Autowired
+	private MockMvc mockMvc;
 
 	@Test
 	public void testValidUserRegistration() throws Exception {
