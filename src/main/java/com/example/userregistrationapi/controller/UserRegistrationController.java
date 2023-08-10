@@ -9,7 +9,6 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.example.userregistrationapi.model.UserRegistrationRequest;
