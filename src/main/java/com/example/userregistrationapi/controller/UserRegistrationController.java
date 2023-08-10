@@ -1,7 +1,10 @@
 package com.example.userregistrationapi.controller;
 
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
@@ -19,7 +22,14 @@ import com.example.userregistrationapi.service.IpGeolocationService;
 public class UserRegistrationController {
 
     @PostMapping("/register")
-    public ResponseEntity registerUser(@Valid @RequestBody UserRegistrationRequest request) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody UserRegistrationRequest request, BindingResult bindingResult) {
+        // Check for validation errors
+        if (bindingResult.hasErrors()) {
+            List<String> errors = new ArrayList<>();
+            bindingResult.getFieldErrors().forEach(error -> errors.add(error.getDefaultMessage()));
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         // Validate IP location
         IpGeolocationService geoService = new IpGeolocationService();
         if (!geoService.isCanadianIp(request.getIpAddress())) {
