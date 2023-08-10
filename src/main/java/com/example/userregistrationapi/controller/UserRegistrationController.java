@@ -33,7 +33,7 @@ public class UserRegistrationController {
         // Validate IP location
         IpGeolocationService geoService = new IpGeolocationService();
         if (!geoService.isCanadianIp(request.getIpAddress())) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You are not eligible to register from outside of Canada.");
+            return ResponseEntity.badRequest().body("You are not eligible to register from outside of Canada.");
         }
 
         // Generate random UUID
@@ -43,7 +43,7 @@ public class UserRegistrationController {
         String cityName = geoService.getCityNameFromIp(request.getIpAddress());
 
         // Construct welcome message
-        String welcomeMessage = "Welcome, " + request.getUsername() + "! You have successfully registered from " + cityName;
+        String welcomeMessage = "Welcome, " + request.getUsername() + "! You have successfully registered from " + cityName + ".";
 
         // Return 200 with UUID and welcome message
         UserRegistrationResponse response = new UserRegistrationResponse(uuid, welcomeMessage);
